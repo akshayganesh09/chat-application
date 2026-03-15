@@ -8,6 +8,10 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+app.get("/", (req, res) => {
+    res.status(200).send("Application is up...");
+});
+
 app.get("/health", (req, res) => {
     res.status(200).json("Chat server running...");
 });
