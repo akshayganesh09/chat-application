@@ -15,6 +15,10 @@ export const getConnection = (userId: string) => {
   return connections.get(userId);
 };
 
+export const getAllConnectedUser = () => {
+  return Array.from(connections.keys());
+};
+
 export const sendToUser = (userId: string, data: any) => {
   const socket = connections.get(userId);
 
