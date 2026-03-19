@@ -57,11 +57,11 @@ export const initWebSocketServer = (server: http.Server) => {
 
         // User sends message...
         if (message.type === "SEND_MESSAGE") {
-          const { conversationId, receiverId, content } = message.payload;
+          const { conversationId, content } = message.payload;
 
-          const savedMessage = await sendMessage(conversationId, receiverId, content);
+          await sendMessage(conversationId, userId, content);
 
-          sendToUser(receiverId, { type: "NEW_MESSAGE", payload: savedMessage });
+          // sendToUser(receiverId, { type: "NEW_MESSAGE", payload: savedMessage });
         }
       } catch (error) {
         console.error("WebSocket error:", error);
@@ -75,7 +75,7 @@ export const initWebSocketServer = (server: http.Server) => {
       await updateLastSeen(userId);
 
       // When User-A disconnects - sever broadcast to everyone User-A is offline.
-      broadCast({ type: "USER_ONLINE", payload: { userId } });
+      broadCast({ type: "USER_OFFLINE", payload: { userId } });
 
       console.log(`User disconnected: ${userId}`);
     });

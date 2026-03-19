@@ -15,3 +15,13 @@ export const createMessage = async (
 
   return result.rows[0];
 };
+
+export const getConversationParticipants = async (conversationId: string) => {
+  const query = `
+    SELECT user_id FROM conversation_participants WHERE conversation_id = $1
+  `;
+
+  const result = await db.query(query, [conversationId]);
+
+  return result.rows;
+};
